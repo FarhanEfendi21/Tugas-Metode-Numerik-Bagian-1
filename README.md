@@ -1,60 +1,60 @@
-# Analisis Rangkaian Listrik Menggunakan Metode Gauss-Seidel
+# Implementasi Metode Gauss-Seidel (Sistem Persamaan Linear) ⚡
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![NumPy](https://img.shields.io/badge/Library-NumPy-orange)
-![Matplotlib](https://img.shields.io/badge/Visualization-Matplotlib-green)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![NumPy](https://img.shields.io/badge/Library-NumPy-013243)
+![Matplotlib](https://img.shields.io/badge/Library-Matplotlib-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
 
-Repositori ini berisi implementasi **Metode Numerik Gauss-Seidel** menggunakan Python untuk menyelesaikan Sistem Persamaan Linear (SPL) pada kasus **Rangkaian Listrik Majemuk 3-Loop**. Proyek ini dibuat untuk memenuhi Tugas Mata Kuliah Metode Numerik.
+> **Tugas Mata Kuliah Metode Numerik**
+> Topik: Penerapan Metode Iterasi untuk Penyelesaian Analisis Arus pada Rangkaian Listrik Majemuk.
 
-## 📌 Deskripsi Masalah
+---
 
-Masalah yang diselesaikan adalah mencari nilai arus ($I_1, I_2, I_3$) pada rangkaian resistif yang memiliki resistor bersama (*shared resistors*). Berdasarkan **Hukum Tegangan Kirchhoff (KVL)**, rangkaian tersebut dimodelkan menjadi sistem persamaan linear.
+## 👨‍💻 Identitas Penulis
 
-**Topologi Rangkaian:**
-![Skema Rangkaian](assets/image_132d82.png)
-*(Pastikan kamu mengupload gambar rangkaian ke folder 'assets' atau root folder)*
+| Atribut | Detail |
+| :--- | :--- |
+| **Nama** | [Isi Nama Anda] |
+| **NIM** | [Isi NIM Anda] |
+| **Departemen** | [Isi Jurusan/Departemen Anda] |
+| **Fakultas** | [Isi Fakultas Anda] |
+| **Universitas** | [Isi Universitas Anda] |
 
-## 📐 Model Matematika
+---
 
-Sistem persamaan linear direpresentasikan dalam bentuk matriks $Ax = B$:
+## 📝 Deskripsi Proyek
 
-$$
-\begin{bmatrix}
-20 & -5 & 0 \\
--5 & 15 & -5 \\
-0 & -5 & 20
-\end{bmatrix}
-\begin{bmatrix}
-I_1 \\
-I_2 \\
-I_3
-\end{bmatrix}
-=
-\begin{bmatrix}
-100 \\
-0 \\
-10
-\end{bmatrix}
-$$
+Proyek ini bertujuan untuk menyelesaikan permasalahan pada **analisis rangkaian listrik majemuk (3-Loop)** di mana perhitungan arus sering kali menghasilkan Sistem Persamaan Linear (SPL) yang kompleks dan saling terikat (*coupled*).
 
-Di mana:
-* **Matriks A**: Representasi Resistansi ($R$) dalam Ohm.
-* **Vektor x**: Variabel Arus ($I$) dalam Ampere yang dicari.
-* **Vektor B**: Sumber Tegangan ($V$) dalam Volt.
+Untuk menghindari kerumitan metode eliminasi manual, proyek ini menerapkan **Metode Numerik Gauss-Seidel**. Algoritma ini menyelesaikan persamaan matriks berbentuk $Ax = B$ yang didapatkan dari Hukum Tegangan Kirchhoff (KVL) secara iteratif.
 
-## ✨ Fitur Program
+Tujuan akhirnya adalah mendapatkan nilai arus ($I_1, I_2, I_3$) dengan presisi tinggi dan membandingkan hasil komputasi numerik dengan solusi eksak dari pustaka NumPy untuk memvalidasi akurasi algoritma.
 
-Program ini memiliki beberapa fitur unggulan:
-1.  **Validasi Matriks (Diagonal Dominant):** Mengecek secara otomatis apakah matriks memenuhi syarat konvergensi ($|a_{ii}| > \sum |a_{ij}|$) sebelum iterasi dimulai.
-2.  **Algoritma Gauss-Seidel:** Mengimplementasikan metode iteratif dengan pembaruan nilai langsung (*immediate update*) untuk konvergensi yang lebih cepat.
-3.  **Visualisasi Data:** Menampilkan grafik konvergensi error menggunakan skala logaritmik (*Log-Scale*) dengan `matplotlib`.
-4.  **Validasi Akurasi:** Membandingkan hasil numerik dengan solusi eksak dari `numpy.linalg.solve`.
+---
 
-## 🚀 Cara Menjalankan
+## ⚙️ Metode yang Digunakan
 
-### Prasyarat
-Pastikan Python 3.x sudah terinstall di komputer Anda. Install pustaka yang dibutuhkan:
+Studi kasus ini menerapkan algoritma penyelesaian SPL Iteratif dengan karakteristik sebagai berikut:
 
+1.  **Syarat Konvergensi (Strictly Diagonally Dominant)**
+    * Algoritma hanya akan dijalankan jika matriks memenuhi syarat: $|a_{ii}| > \sum |a_{ij}|$ (untuk $j \neq i$).
+    * Hal ini menjamin bahwa iterasi pasti akan menemukan solusi (konvergen) dan tidak divergen.
+
+2.  **Pembaruan Langsung (*Immediate Update*)**
+    * Berbeda dengan metode Jacobi, metode Gauss-Seidel langsung menggunakan nilai terbaru yang baru saja dihitung pada iterasi yang sama.
+    * Rumus Iterasi: $x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1}^{i-1} a_{ij}x_j^{(k+1)} - \sum_{j=i+1}^{n} a_{ij}x_j^{(k)} \right)$
+
+3.  **Kriteria Berhenti (*Stopping Criteria*)**
+    * Iterasi dihentikan ketika **Error Relatif** antar iterasi lebih kecil dari toleransi yang ditetapkan ($\epsilon = 10^{-7}$).
+    * Perhitungan error menggunakan Norma Tak-Hingga (*Infinity Norm*).
+
+---
+
+## 🚀 Implementasi Kode
+
+Program ditulis menggunakan **Python** dengan memanfaatkan pustaka NumPy untuk operasi matriks dan Matplotlib untuk visualisasi grafik konvergensi (skala logaritmik).
+
+### Prasyarat (Requirements)
+Pastikan Anda telah menginstal pustaka berikut:
 ```bash
 pip install numpy matplotlib
