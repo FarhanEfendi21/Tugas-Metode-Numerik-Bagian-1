@@ -14,11 +14,11 @@
 
 | Atribut | Detail |
 | :--- | :--- |
-| **Nama** | [Isi Nama Anda] |
-| **NIM** | [Isi NIM Anda] |
-| **Departemen** | [Isi Jurusan/Departemen Anda] |
-| **Fakultas** | [Isi Fakultas Anda] |
-| **Universitas** | [Isi Universitas Anda] |
+| **Nama** | Muhammad Farhan Efendi|
+| **NIM** | 21120123140181 |
+| **Departemen** | Teknik Komputer |
+| **Fakultas** | Teknik |
+| **Universitas** | Universitas Diponegoro |
 
 ---
 
